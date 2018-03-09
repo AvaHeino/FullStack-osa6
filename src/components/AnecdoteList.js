@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { anecdoteVoting } from './../reducers/anecdoteReducer'
+import { setNotification, removeNotification } from './../reducers/notificationReducer'
 
 
 class AnecdoteList extends React.Component {
@@ -10,15 +11,21 @@ class AnecdoteList extends React.Component {
       this.forceUpdate()
       )
   }
-
   vote = (id) => (e) => {
-    this.context.store.dispatch(
+    const { store } = this.context
+    store.dispatch(
       anecdoteVoting(id)
       )
+    store.dispatch(
+      setNotification('Your vote has been registered!')
+      )
+    setTimeout(function() {store.dispatch(removeNotification())}, 5000)
+    
   }
 
   render() {
-    const anecdotes = this.context.store.getState()
+    const anecdotes = this.context.store.getState().anecdotes
+    console.log(anecdotes)
     return (
       <div>
         <h2>Anecdotes</h2>
