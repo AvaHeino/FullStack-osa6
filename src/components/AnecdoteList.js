@@ -24,12 +24,14 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
+    const filter = this.context.store.getState().filter 
     const anecdotes = this.context.store.getState().anecdotes
-    console.log(anecdotes)
+    const filtered_anecdotes = anecdotes.filter(a => a.content.includes(filter))
+   
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+        {filtered_anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
           <div key={anecdote.id}>
             <div>
               {anecdote.content}
