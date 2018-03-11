@@ -1,6 +1,7 @@
 import React from 'react'
 import { anecdoteVoting } from './../reducers/anecdoteReducer'
 import { setNotification } from './../reducers/notificationReducer'
+import anecdoteService from './../services/anecdotes'
 import { connect } from 'react-redux'
 
 class AnecdoteList extends React.Component {
@@ -8,6 +9,8 @@ class AnecdoteList extends React.Component {
   vote = (id) => (e) => {
     const { anecdoteVoting, setNotification } = this.props
     anecdoteVoting(id)
+    const anecdote = this.props.anecdotes.find(a => a.id === id)
+    anecdoteService.voteForAnecdote(anecdote)
     setNotification('Your vote has been registered!')
     setTimeout(function() {setNotification('')}, 5000)
     
@@ -36,6 +39,7 @@ class AnecdoteList extends React.Component {
 }
 
 const filteredAnecdotes = (anecdotes, filter) => {
+  console.log(anecdotes)
   const filtered_anecdotes = anecdotes.filter(a => a.content.includes(filter))
   return filtered_anecdotes.sort((a,b) => b.votes - a.votes)
 }

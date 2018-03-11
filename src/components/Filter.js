@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { changeFilter } from './../reducers/filterReducer'
 import { connect } from 'react-redux'
 

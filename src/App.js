@@ -9,7 +9,7 @@ import anecdoteService from './services/anecdotes'
 
 class App extends React.Component {
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     const anecdotes = await anecdoteService.getAll()
     this.props.anecdoteInitialization(anecdotes)
   }
@@ -27,7 +27,13 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+  anecdotes: (state.anecdotes)
+ }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { anecdoteInitialization }
 )(App)
